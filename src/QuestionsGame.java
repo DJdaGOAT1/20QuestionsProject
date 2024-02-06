@@ -6,7 +6,7 @@ import java.io.PrintStream;
 import java.util.*;
 
 public class QuestionsGame {
-    // Your code here
+    public QuestionNode overallRoot;
 
     private static class QuestionNode {
         public final String data;
@@ -21,22 +21,57 @@ public class QuestionsGame {
     }
     
     public QuestionsGame(String object) {
-    	QuestionsGame obj = new QuestionsGame(object);
+    	overallRoot = new QuestionNode(object);
     }
     
     public QuestionsGame(Scanner input) {
-    	QuestionsGame scan = new QuestionsGame(input);
+    	overallRoot = makeTree(input);
+
     }
     
+    private QuestionNode makeTree(Scanner input) {
+        String type = input.nextLine(); //skips q and a
+        String item = input.nextLine(); //item = next line in the file
+        QuestionNode a = new QuestionNode(item);
+
+        //if it is a question
+        if (type.contains("Q")) {
+           a.left = makeTree(input);
+           a.right = makeTree(input);
+        }
+
+        return a;
+    }
+
+    
     public void saveQuestions(PrintStream output) {
-    	if(output == null) {
-    		throw new IllegalArgumentException();
-    	}
+        saveQuestions(overallRoot, output); 
+    }
+
+    private void saveQuestions(QuestionNode node, PrintStream output) {
+       
+        if(node.left == null && node.right == null) {
+        	output.println("A: ");
+        	output.println(node.data);
+        }
+        else {
+        	output.println("Q: ");
+        	saveQuestions(node.left, output);
+        	saveQuestions(node.right, output);
+        }
     }
     
     public void play() {
-    	
+    	play(overallRoot);
     }
     
+    private void play(QuestionNode overallRoot) {
+    	while(overallRoot != null) {
+    		
+    	}
+    }
     
+   
+    
+
 }
