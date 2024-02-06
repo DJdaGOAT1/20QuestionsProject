@@ -18,6 +18,13 @@ public class QuestionsGame {
         	this.left = left;
         	this.right = right;
         }
+        
+        public QuestionNode(String data) {
+        	this.data = data;
+        	left = null;
+        	right = null;
+        }
+
     }
     
     public QuestionsGame(String object) {
